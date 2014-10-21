@@ -248,17 +248,15 @@
    * @param owner
    * @returns {}
    */
-  function loyal_to(owner) {
-    return function detach(method){
-      return function detachable(){
-        var args = to_real_array(arguments);
-        return method.apply(owner, args);
-      };
+  function loyal_to(owner,method) {
+    return function detachable(){
+      var args = to_real_array(arguments);
+      return method.apply(owner, args);
     };
   }
 
   function detached(from_object, method_name){
-    return loyal_to(from_object)(from_object[method_name]);
+    return loyal_to(from_object,from_object[method_name]);
   }
 
   function make_FIFO (elements) {
@@ -444,13 +442,3 @@
   }
 
 }(window,"valsJsTricks"));
-
-var complicatedObjects = [
-  {a:1,b:{c: "hello"}},
-  {a:2,b:{c: "how"}},
-  {a:3,b:{c: "are"}},
-  {a:4,b:{c: "you ?"}}
-];
-
-complicatedObjects.map(deep_getter('a')); // => [1,2,3,4]
-complicatedObjects.map(deep_getter('b','c')); // => ["hello","how","are","you ?"]
