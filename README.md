@@ -20,19 +20,18 @@ All of the functions are autonomous (i.e none of them are defined with the `this
 Summary
 ======
 
-* [get_in](#get_in)
+* [as_func](#as_func)
+* [augmented_with](#augmented_with)
+* [compose](#compose)
 * [deep_getter](#deep_getter)
+* [find](#find)
+* [get_in](#get_in)
+* [index_array](#index_array)
+* [is_defined and is_undefined](#is_defined-and-is_undefined)
 * [loyal_to and detached](#loyal_to-and-detached)
+* [partial](#partial)
 * [to_real_array](#to_real_array)
 * [varargs_ify](#varargs_ify)
-* [varargs_ify](#varargs_ify)
-* [index_array](#index_array)
-* [find](#find)
-* [is_defined and is_undefined](#is_defined-and-is_undefined)
-* [as_func](#as_func)
-* [partial](#partial)
-* [compose](#compose)
-* [augmented_with](#augmented_with)
 
 
 get_in
