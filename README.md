@@ -22,12 +22,17 @@ Summary
 
 * [get_in](#get_in)
 * [deep_getter](#deep_getter)
-* [loyal_to and detached](loyal_to-and-detached)
+* [loyal_to and detached](#loyal_to-and-detached)
 * [to_real_array](#to_real_array)
 * [varargs_ify](#varargs_ify)
 * [varargs_ify](#varargs_ify)
 * [index_array](#index_array)
-* [](#)
+* [find](#find)
+* [is_defined and is_undefined](#is_defined-and-is_undefined)
+* [as_func](#as_func)
+* [partial](#partial)
+* [compose](#compose)
+* [augmented_with](#augmented_with)
 
 
 get_in
