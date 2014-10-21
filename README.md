@@ -17,6 +17,13 @@ If you are using AngularJS, a `'valsJsTricks'` with a constant named `'jsTricks'
 All of the functions are autonomous (i.e none of them are defined with the `this` keyword).
 
 
+Summary
+======
+
+[get_in](#get_in)
+[deep_getter](#deep_getter)
+
+
 get_in
 ------
 
