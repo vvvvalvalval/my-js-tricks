@@ -16,7 +16,7 @@
   }
 
   /**
-   *
+   * Debugging utility : inspect("someName")(value) logs "someName  = " + value
    * @param name
    * @returns {Function}
    */
@@ -405,31 +405,29 @@
   // EXPORT HERE :
 
   var exposed = {
-    utils: {
-      as_func: as_func,
-      augmented_with : augmented_with,
-      compose: compose,
-      constant: constant,
-      constant_array: constant_array,
-      deep_getter: deep_getter,
-      partial: partial,
-      detached: detached,
-      find: find,
-      forProperty: forProperty,
-      get_in: get_in,
-      identity: identity,
-      indexArray: indexArray,
-      inspect: inspect,
-      is_defined: is_defined,
-      is_undefined: is_undefined,
-      loyal_to: loyal_to,
-      make_FIFO: make_FIFO,
-      make_bounded_FIFO: make_bounded_FIFO,
-      range: range,
-      some_defined: some_defined,
-      to_real_array: to_real_array,
-      varargs_ify : varargs_ify
-    }
+    as_func: as_func,
+    augmented_with : augmented_with,
+    compose: compose,
+    constant: constant,
+    constant_array: constant_array,
+    deep_getter: deep_getter,
+    partial: partial,
+    detached: detached,
+    find: find,
+    forProperty: forProperty,
+    get_in: get_in,
+    identity: identity,
+    indexArray: indexArray,
+    inspect: inspect,
+    is_defined: is_defined,
+    is_undefined: is_undefined,
+    loyal_to: loyal_to,
+    make_FIFO: make_FIFO,
+    make_bounded_FIFO: make_bounded_FIFO,
+    range: range,
+    some_defined: some_defined,
+    to_real_array: to_real_array,
+    varargs_ify : varargs_ify
   };
 
   // Expose in global namespace
@@ -442,7 +440,7 @@
   // Expose in angular
   if(angular){
     angular.module('valsJsTricks',[])
-      .constant('jsTricks',exposed.utils);
+      .constant('jsTricks',exposed);
   }
 
 }(window,"valsJsTricks"));

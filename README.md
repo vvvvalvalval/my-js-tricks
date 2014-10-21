@@ -1,9 +1,23 @@
-my-js-tricks
+valsJsTricks
 ============
 
-Some JavaScript utility functions I use for my developments.
+Some JavaScript utility functions I use for my developments. Many of them are inspired from other programming languages I have used, like Clojure and OCaml.
 
-These come from 3 origins : 
-  - JavaScript: the good parts, the excellent book by D. Crockford.
-  - Influences of other programming languages, such as Clojure and Scala.
-  - My own inspiration, as I try to refactor my programs.
+as_func
+------
+
+Takes a JS object (or array), and returns the natural function of its keys / indexes.
+
+```javascript
+var myObj = {a: 1, b: "hello", c: null}, f = as_func(myObj);
+f('a'); // => 1
+f('b'); // => "hello"
+f('c'); // => null
+f('d'); // => undefined
+
+var myArr = [1,"hello",null], g = as_func(myArr);
+g(0); // => 1
+g(1); // => "hello"
+g(2); // => null
+g(3); // => undefined
+```
