@@ -20,8 +20,10 @@ All of the functions are autonomous (i.e none of them are defined with the `this
 Summary
 ======
 
-[get_in](#get_in)
-[deep_getter](#deep_getter)
+**[get_in](#get_in)**
+**[deep_getter](#deep_getter)**
+**[loyal_to and detached](loyal_to-and-detached)**
+**[]()**
 
 
 get_in
