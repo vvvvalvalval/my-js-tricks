@@ -420,6 +420,8 @@
         })(initial_function);
     }
 
+
+
     /**
      * Transforms a function into a function that always refers to this as the specified owner object.
      * Useful for detaching a method from an object.
@@ -427,10 +429,16 @@
      * @returns {}
      */
     function loyal_to(owner) {
-        var loyalty = function (invoke) {
-            invoke(owner);
-        }
-        return augmented_with(loyalty);
+        return function detach(method){
+            return function detachable(){
+                var args = to_real_array(arguments);
+                method.apply(owner, args);
+            };
+        };
+    }
+
+    function detached(from_object, method_name){
+        return loyal_to(from_object)(from_object[method_name]);
     }
 
 
