@@ -442,3 +442,19 @@
   }
 
 }(window,"valsJsTricks"));
+
+var count = function (arr) {
+  return arr.length;
+};
+var countMyArgs = varargs_ify(count);
+countMyArgs(); // => 0;
+countMyArgs("a","b","c"); // => 3
+
+// if the initial function accepts other arguments arguments than an the array, you can specify `starting` and/or `trailing` options
+var logCount = function (beginning, arr, end) {
+  console.log(beginning + " " + arr.count + " " + end);
+};
+logCount("The array has",[1,2,3,4],"arguments"); // => logs "The array has 4 arguments"
+
+var logMiddleArgs = varargs_ify(logCount,{starting: 1, trailing: 1});
+logMiddleArgs("The array has", 1, 2, 3, 4, "arguments");

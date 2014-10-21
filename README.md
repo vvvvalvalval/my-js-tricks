@@ -65,6 +65,7 @@ get_in(myObj,[]); // => myObj
 
 get_in(myObj,['nonexistentKey']); // => undefined
 get_in(myObj,['b','nonexistentKey']); // => undefined
+get_in(myObj,['b','nonexistentKey','d',1]); // => undefined
 get_in(myObj,['a','nonexistentKey']); // => undefined
 ```
 
@@ -89,7 +90,7 @@ complicatedObjects.map(deep_getter('a')); // => [1,2,3,4]
 complicatedObjects.map(deep_getter('b','c')); // => ["hello","how","are","you ?"]
 ```
 
-`loyal_to` and `detached`
+loyal_to and detached
 ------
 
 As soon as a function is declared as a method of an object using the `this` keyword, it stops being first-class, in that you have to always call it from the object to which it belongs.
@@ -101,11 +102,11 @@ This can lead to confusing or painful situations, for example :
 console.log("hello"); // logs "hello"
 var f = console.log; f("hello"); // throws an error
 
-// painful : you can't do that
+// painful
 ["hello","how","are","you ?"].map(console.log); // you can't do that.
 ```
 
-You can't avoid this issue by defining your own functions without this, but sometimes a library just won't give you a choice. `loyal_to` and `detached` are here to right this wrong.
+You can avoid this issue by defining your own functions without this, but sometimes a library just won't give you a choice. `loyal_to` and `detached` are here to right this wrong.
 
 `loyal_to` consumes an object `obj` and a function `f` (that supposedly was defined with `this`, or it would be useless), and returns a function that acts just like `f`, but for which `this` is "frozen" to always resolve to `obj`.
 
@@ -133,3 +134,34 @@ var detachedMethod = loyal_to(ownerObject,ownerObject.methodName);
  ```javascript
  var detachedMethod = detached(ownerObject,'methodName');
  ```
+ 
+ 
+ to_real_array
+ ------
+ 
+ Takes an array-like structure and copies it into a real array. Can be used to copy real arrays to.
+ 
+ 
+ varargs_ify
+ ------
+ 
+ Takes a function that accepts an array as argument, and returns a function with variadic arguments. 
+ ```javascript
+ var count = function (arr) {
+   return arr.length;
+ };
+ var countMyArgs = varargs_ify(count);
+ countMyArgs(); // => 0;
+ countMyArgs("a","b","c"); // => 3
+ 
+ // if the initial function accepts other arguments arguments than an the array, you can specify `starting` and/or `trailing` options
+ var logCount = function (beginning, arr, end) {
+   console.log(beginning + " " + arr.count + " " + end);
+ };
+ logCount("The array has",[1,2,3,4],"arguments"); // => logs "The array has 4 arguments"
+ 
+ var logMiddleArgs = varargs_ify(logCount,{starting: 1, trailing: 1});
+ logMiddleArgs("The array has", 1, 2, 3, 4, "arguments");
+ ```
+ 
+ 
