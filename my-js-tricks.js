@@ -259,68 +259,6 @@
     return loyal_to(from_object,from_object[method_name]);
   }
 
-  function make_FIFO (elements) {
-    elements = (elements || []).slice(); //defensive copying
-    var begin = 0, end = elements.length;
-
-    var res = {};
-    function toArray () {
-      return elements.slice(begin,end);
-    }
-    function size () {
-      return end-begin;
-    }
-    function isEmpty () {
-      return begin === end;
-    }
-    function push(element){
-      elements.push(element);
-      end += 1;
-      return res;
-    }
-    function pop(){
-      if(!isEmpty()){
-        var element = elements[begin];
-        delete elements[begin];
-        begin += 1;
-        return element;
-      }
-    }
-    res.toArray = toArray; // copies elements into a new array
-    res.size = size; // number of elements
-    res.isEmpty = isEmpty;
-    res.push = push; // adds an element at the end of the queue and returns the queue
-    res.pop = pop; //
-
-    return res;
-  }
-
-  /**
-   * Creates a bounded FIFO queue which drops the oldest elements when max_size is reached.
-   * @param max_size
-   * @param elements
-   * @returns {fifo}
-   */
-  function make_bounded_FIFO(max_size, elements){
-    var fifo = make_FIFO(), bounded_fifo = Object.create(fifo); // decorates a regular FIFO.
-
-    // decorating push.
-    function push(element) {
-      fifo.push(element);
-      while(fifo.size() > max_size) {
-        fifo.pop();
-      }
-      return bounded_fifo;
-    }
-    bounded_fifo.push = push;
-
-    // adding all elements
-    elements = elements || [];
-    elements.forEach(push);
-
-    return bounded_fifo;
-  }
-
   /**
    * Creates an array of the integers from the specified range.
    * @param begin
@@ -359,7 +297,7 @@
    * @param elements
    * @param getKey
    */
-  function indexArray (elements, getKey) {
+  function index_array (elements, getKey) {
     var res = {};
     elements.forEach(function (item) {
       res[getKey(item)] = item;
@@ -415,13 +353,11 @@
     forProperty: forProperty,
     get_in: get_in,
     identity: identity,
-    indexArray: indexArray,
+    index_array: index_array,
     inspect: inspect,
     is_defined: is_defined,
     is_undefined: is_undefined,
     loyal_to: loyal_to,
-    make_FIFO: make_FIFO,
-    make_bounded_FIFO: make_bounded_FIFO,
     range: range,
     some_defined: some_defined,
     to_real_array: to_real_array,
@@ -443,18 +379,7 @@
 
 }(window,"valsJsTricks"));
 
-var count = function (arr) {
-  return arr.length;
-};
-var countMyArgs = varargs_ify(count);
-countMyArgs(); // => 0;
-countMyArgs("a","b","c"); // => 3
-
-// if the initial function accepts other arguments arguments than an the array, you can specify `starting` and/or `trailing` options
-var logCount = function (beginning, arr, end) {
-  console.log(beginning + " " + arr.count + " " + end);
-};
-logCount("The array has",[1,2,3,4],"arguments"); // => logs "The array has 4 arguments"
-
-var logMiddleArgs = varargs_ify(logCount,{starting: 1, trailing: 1});
-logMiddleArgs("The array has", 1, 2, 3, 4, "arguments");
+var add = function(a,b){return a+b;};
+var add5 = partial(add)(5); // notice the curried construct.
+add5(2); // => 7
+add5(8); // => 13
