@@ -1,7 +1,21 @@
-valsJsTricks
-============
+Some generic JavaScript utility functions I use for my developments. 
+Many of them are inspired from other programming languages I have used, like Clojure and OCaml.
 
-Some JavaScript utility functions I use for my developments. Many of them are inspired from other programming languages I have used, like Clojure and OCaml.
+Usage
+======
+
+If you add this file, a global variable `window.valsJsTricks` will be created, that is an object holding the functions defined below.
+
+You'll typically want to write :
+```javascript
+var u = window.valsJsTricks;
+u.augmentedWith() // ...
+```
+
+If you are using AngularJS, a `'valsJsTricks'` with a constant named `'jsTricks'` will be created.
+
+All of the functions are autonomous (i.e none of them are defined with the `this` keyword).
+
 
 get_in
 ------
@@ -192,7 +206,8 @@ var add = function(a,b){return a+b;};
 var add5 = partial(add)(5); // notice the curried construct.
 add5(2); // => 7
 add5(8); // => 13
-``
+``` 
+
 
 compose
 ------
@@ -214,3 +229,32 @@ ultraComposed(z1,z2); // same as f(g1(h(z1,z2)),g2(h(z1,z2)),g3(h(z1,z2)))
 
 Note that in a construct like `composedFn = compose(f)(g1,g2,...)(h1,h2,...)...(l1,l2)()`, there is *always* **one** argument in the first parameters group (`f` in this case), and none in the last.
 
+
+augmented_with
+------
+
+Accepts a *behavior* function, and returns a function that "augments" other functions with this behavior.
+Can be used to add side-effects to functions, or intercept its calls or returned values.
+
+This is best understood by example : 
+
+```javascript
+// adding side-effects
+var timingBehavior = function (invoke) {
+  var start = new Date();
+  invoke();
+  var end = new Date();
+  console.log("Elapsed time : " + (end.getTime() - start.getTime()) + " ms");
+};
+var timed = augmented_with(timingBehavior);
+var myTimedFn = timed(myFn); // myTimedFn has exactly the same arity and logic as myFn, but additionally logs how much time it takes to compute.
+
+// intercepting result
+var defaultingToZero = function(invoke){
+  var res = invoke();
+  if(!res){
+    return 0;
+  }
+};
+var safeFindMyNumber = augmented_with(defaultingToZero)(findMyNumber); // this function is like findMyNumber, but returns 0 when findMyNumber would return null or undefined.
+```

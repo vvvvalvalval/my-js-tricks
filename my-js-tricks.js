@@ -379,7 +379,22 @@
 
 }(window,"valsJsTricks"));
 
-var add = function(a,b){return a+b;};
-var add5 = partial(add)(5); // notice the curried construct.
-add5(2); // => 7
-add5(8); // => 13
+// adding side-effects
+var timingBehavior = function (invoke) {
+  var start = new Date();
+  invoke();
+  var end = new Date();
+  console.log("Elapsed time : " + (end.getTime() - start.getTime()) + " ms");
+};
+var timed = augmented_with(timingBehavior);
+var myTimedFn = timed(myFn); // myTimedFn has exactly the same arity and logic as myFn, but additionally logs how much time it takes to compute.
+
+// intercepting result
+var defaultingToZero = function(invoke){
+  var res = invoke();
+  if(!res){
+    return 0;
+  }
+};
+var safeFindMyNumber = augmented_with(defaultingToZero)(findMyNumber); // this function is like findMyNumber, but returns 0 when findMyNumber would return null or undefined.
+
